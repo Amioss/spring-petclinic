@@ -3,7 +3,7 @@ pipeline {
             
     options {
         timeout(time: 1, unit: 'HOURS')
-        retry(2)
+        retry(1)
     }
     stages {
         stage('Source code') {
