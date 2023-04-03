@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                ./mvnw spring-boot:run -Dspring-boot.run.profiles=mysql
+                sh './mvnw spring-boot:run -Dspring.profiles.active=mysql'
             }
         }
-}
+    }
 }
