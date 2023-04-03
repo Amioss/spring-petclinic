@@ -1,9 +1,10 @@
 pipeline {
-    agent any
-            
+    agent {
+        label 'JDK17'
+    }
     options {
         timeout(time: 1, unit: 'HOURS')
-        retry(1)
+        retry(2)
     }
     stages {
         stage('Source code') {
