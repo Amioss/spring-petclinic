@@ -2,18 +2,10 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                ./mvnw spring-boot:run -Dspring-boot.run.profiles=mysql
             }
         }
-        
-    }
-    
+}
 }
