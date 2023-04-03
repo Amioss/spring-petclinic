@@ -1,7 +1,7 @@
 pipeline {
-    agent {
-        label 'JDK17'
-    }
+    agent any
+        any
+    
     options {
         timeout(time: 1, unit: 'HOURS')
         retry(2)
