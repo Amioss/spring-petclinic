@@ -2,12 +2,18 @@ pipeline {
     agent any
     
     stages {
-        stage('Buildd') {
+        stage('Checkout') {
             steps {
-                sh './mvnw clean package -DskipTests=true -Dspring.profiles.active=mysql'
+                checkout scm
             }
         }
         
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
         
     }
+    
 }
