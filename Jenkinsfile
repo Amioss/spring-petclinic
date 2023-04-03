@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                'spring-petclinic/src/test/jmeter/petclinic_test_plan.jmx'
+                ./mvnw spring-boot:run -Dspring-boot.run.profiles=mysql
             }
         }
 }
