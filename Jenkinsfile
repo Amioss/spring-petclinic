@@ -1,17 +1,36 @@
 pipeline {
-    agent any
-
+    agent {
+        label 'JDK17'
+    }
+    options {
+        timeout(time: 1, unit: 'HOURS')
+        retry(2)
+    }
     stages {
-        stage('Checkout') {
+        stage('Source code') {
             steps {
-                checkout scm
+                git url: 'https://github.com/Amioss/spring-petclinic.git', branch: 'main'
             }
         }
-        stage('Build and Test') {
+        stage('Build the code') {
             steps {
-                sh './mvnw spring-boot:run -Dspring-boot.run.profiles=mysql'
-                echo 'Build and Test succeeded!'
+                sh script: 'mvn clean package'
             }
+        }
+        stage('Reporting and Archiving') {
+            steps {
+                junit testResults: 'target/surefire-reports/*.xml'
+            }
+        }
+    }
+    post {
+        success {
+            //send the success email
+            echo "success"
+        }
+        unsuccessful {
+            //send the unsuccessful email
+            echo "Failure"
         }
     }
 }
