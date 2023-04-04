@@ -1,22 +1,17 @@
-#!groovy
-
 pipeline {
   agent none
   stages {
-    stage('Maven Install') {
-      agent {
-        docker {
-          image 'python:latest'
-        }
-      }
+    stage('Spring Boot Run') {
+      agent any
       steps {
         sh './mvnw spring-boot:run -Dspring-boot.run.profiles=mysql'
+        echo "success"
       }
     }
     stage('Docker Build') {
       agent any
       steps {
-        sh 'sudo docker build -t amioss/app_petclinic:1.0 .'
+        sh 'docker build -t amioss/app_petclinic:1.0 .'
       }
     }
   }
