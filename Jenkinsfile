@@ -10,13 +10,13 @@ pipeline {
         }
       }
       steps {
-        sh 'mvn clean install'
+        sh 'sudo mvn clean install'
       }
     }
     stage('Docker Build') {
       agent any
       steps {
-        sh 'docker build -t amioss/app_petclinic:1.0 .'
+        sh 'sudo docker build -t amioss/app_petclinic:1.0 .'
       }
     }
   }
