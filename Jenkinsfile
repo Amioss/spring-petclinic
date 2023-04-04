@@ -10,7 +10,7 @@ pipeline {
         }
       }
       steps {
-        sh 'sudo mvn clean install'
+        sh './mvnw spring-boot:run -Dspring-boot.run.profiles=mysql'
       }
     }
     stage('Docker Build') {
