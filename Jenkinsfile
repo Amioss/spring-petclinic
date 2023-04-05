@@ -1,30 +1,32 @@
 pipeline {
-  agent none
-  stages {
-    stage('Spring Boot Run') {
-      agent any
-      steps {
-        script {
-          def appStatus = sh script: './mvnw spring-boot:run -Dspring-boot.run.profiles=mysql', returnStatus: true
-          if (appStatus == 0) {
-            echo "Success: Application started successfully"
-          } else {
-            echo "Error: Application failed to start"
-            error "Failed to start application"
-          }
-        }
-      }
+    agent any
+    environment {
+        DOCKER_IMAGE_NAME = "petclinic_app"
+        DOCKERFILE_GITHUB_REPO = "https://github.com/Amioss/spring-petclinic.git"
+        DOCKERFILE_GITHUB_BRANCH = "main"
     }
-    stage('Docker Build') {
-      when {
-        expression {
-          return appStatus == 0
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${env.DOCKERFILE_GITHUB_BRANCH}", url: "${env.DOCKERFILE_GITHUB_REPO}"
+            }
         }
-      }
-      agent any
-      steps {
-        sh 'docker build -t amioss/app_petclinic:1.0 .'
-      }
+        stage('Build Docker image') {
+            steps {
+                script {
+                    docker.build("${env.DOCKER_IMAGE_NAME}:latest", "--file=./Dockerfile .")
+                }
+            }
+        }
+        stage('Run Docker container') {
+            steps {
+                sh "docker run -d -p 8080:8080 ${env.DOCKER_IMAGE_NAME}:latest"
+            }
+        }
     }
-  }
+    post {
+        always {
+            sh "docker ps -a"
+        }
+    }
 }
