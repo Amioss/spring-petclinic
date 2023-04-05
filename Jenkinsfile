@@ -20,7 +20,8 @@ pipeline {
         }
         stage('Run Docker container') {
             steps {
-                sh "docker run -d -p 81:8080 ${env.DOCKER_IMAGE_NAME}:latest"
+                sh "docker rm -f petclinic_container || true"
+                sh "docker run -d --name petclinic_container -p 81:8080 ${env.DOCKER_IMAGE_NAME}:latest"
             }
         }
     }
