@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Run Docker container') {
             steps {
-                sh "docker run -d -p 80:8080 ${env.DOCKER_IMAGE_NAME}:latest"
+                sh "docker run -d -p 81:8080 ${env.DOCKER_IMAGE_NAME}:latest"
             }
         }
     }
