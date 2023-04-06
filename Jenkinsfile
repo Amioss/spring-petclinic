@@ -18,7 +18,12 @@ pipeline {
                 }
             }
         }
-        stage('Run Docker') {
+        stage('Test') {
+            steps {
+                echo "Test in progress..."
+            }
+        }
+        stage('Run Petclinic in container ') {
             steps {
                 sh "docker rm -f petclinic_container || true"
                 sh "docker run -d --name petclinic_container -p 80:8080 ${env.DOCKER_IMAGE_NAME}:latest"
