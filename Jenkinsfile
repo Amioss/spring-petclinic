@@ -1,4 +1,4 @@
-pipeline {
+ipeline {
     agent any
     environment {
         DOCKER_IMAGE_NAME = "petclinic_app"
@@ -11,7 +11,6 @@ pipeline {
                 git branch: "${env.DOCKERFILE_GITHUB_BRANCH}", url: "${env.DOCKERFILE_GITHUB_REPO}"
             }
         }
-        
         stage('Build Docker image') {
             steps {
                 script {
@@ -25,19 +24,10 @@ pipeline {
                 sh "docker run -d --name petclinic_container -p 80:8080 ${env.DOCKER_IMAGE_NAME}:latest"
             }
         }
-        stage('Execute Tests') {
-            steps{
-            echo 'Test in progress'
-            }
-        
-        }
-
     }
     post {
         always {
             sh "docker ps -a"
-           
-           
         }
     }
 }
