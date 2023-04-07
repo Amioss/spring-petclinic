@@ -1,4 +1,4 @@
-ipeline {
+pipeline {
     agent any
     environment {
         DOCKER_IMAGE_NAME = "petclinic_app"
