@@ -14,7 +14,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    docker.build("${env.DOCKER_IMAGE_NAME}:latest", "--file=./Dockerfile --no-cache .")
+                    docker.build("${env.DOCKER_IMAGE_NAME}:latest", "--file=./Dockerfile .")
                 }
             }
         }
