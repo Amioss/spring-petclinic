@@ -18,6 +18,14 @@ pipeline {
                 }
             }
         }
+        
+        stage('Test') {
+            steps {                
+                    echo 'Test to be performed')
+               
+            }
+        }
+        
         stage('Run Docker') {
             steps {
                 sh "docker rm -f petclinic_container || true"
